@@ -2,9 +2,11 @@
 
 A simple Neovim plugin to format current buffer using an external command
 
+Thank you https://github.com/ckipp01/stylua-nvim
+
 # Motivation
 
-There are tons of Vim/Neovim plugins which formats code using external commands, e.g.) Yapf.vim, Stylua.vim, and Pretteier.vim. These plugins has some problems:
+There are tons of Vim/Neovim plugins which formats code using external commands, e.g.) Yapf.vim, Stylua.vim, and Pretteier.vim. Some of these plugins has some problems:
 
 - It creates unwanted cursor position history (Especially Prettier.vim)
 - Sometimes it fails because it can't find the command
