@@ -2,6 +2,16 @@
 
 A simple Neovim plugin to format current buffer using an external command
 
+# Motivation
+
+There are tons of Vim/Neovim plugins which formats code using external commands, e.g.) Yapf.vim, Stylua.vim, and Pretteier.vim. These plugins has some problems:
+
+- It creates unwanted cursor position history (Especially Prettier.vim)
+- Sometimes it fails because it can't find the command
+- Compatibility issue
+
+`nvim-format-buffer` is written in Lua so it's fast and does not change cursor positions at all. It also respects your OS settings to find path.
+
 # Install
 
 Using Packer.nvim:
