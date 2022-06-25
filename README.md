@@ -35,3 +35,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	callback = require("nvim-format-buffer").create_format_fn("prettier --parser typescript"),
 })
 ```
+
+# TODO
+
+- [ ] Error handling
