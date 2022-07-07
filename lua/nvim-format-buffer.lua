@@ -12,6 +12,7 @@ end
 M.format_whole_file = function(cmd)
 	local bufnr = vim.fn.bufnr("%")
 	local input = M.buf_get_full_text(bufnr)
+	-- TODO: use os.execute because it gets stderr and stdout separately
 	local output = vim.fn.system(cmd, input)
 	if output ~= input then
 		local new_lines = vim.fn.split(output, "\n")
