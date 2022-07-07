@@ -39,3 +39,4 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 # TODO
 
 - [ ] Error handling
+- [ ] Do not include stderr.
