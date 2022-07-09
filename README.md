@@ -34,6 +34,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
 	callback = require("nvim-format-buffer").create_format_fn("prettier --parser typescript 2>/dev/null"),
 })
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	pattern = { "*.rs" },
+	callback = require("nvim-format-buffer").create_format_fn("rustfmt --edition 2021"),
+})
 ```
 
 # TODO
