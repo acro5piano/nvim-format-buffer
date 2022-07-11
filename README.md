@@ -39,6 +39,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*.rs" },
 	callback = require("nvim-format-buffer").create_format_fn("rustfmt --edition 2021"),
 })
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	pattern = { "*.py" },
+	callback = require("nvim-format-buffer").create_format_fn("black -q - | isort -"),
+})
 ```
 
 # TODO
