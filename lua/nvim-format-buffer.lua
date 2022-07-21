@@ -45,4 +45,13 @@ M.setup = function(config)
 	end
 end
 
+local run_stylua = require("nvim-format-buffer").create_format_fn("stylua -")
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	pattern = { "*.lua" },
+	callback = function()
+		run_stylua()
+		print("Formatted!")
+	end,
+})
+
 return M
