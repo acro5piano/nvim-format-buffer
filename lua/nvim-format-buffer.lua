@@ -37,7 +37,7 @@ end
 -- })
 -- ```
 M.setup = function(config)
-	for rule in ipairs(config.format_rules) do
+	for _, rule in ipairs(config.format_rules) do
 		vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 			pattern = rule.pattern,
 			callback = M.create_format_fn(rule.command),
