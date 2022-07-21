@@ -26,4 +26,23 @@ M.create_format_fn = function(cmd)
 	end
 end
 
+-- Setup plugin. For example,
+--
+-- ```lua
+-- require("nvim-format-buffer").setup({
+-- 	format_rules = {
+-- 		{ pattern = { "*.lua" }, command = "stylua -" },
+-- 		{ pattern = { "*.py" }, command = "black -q - | isort -" },
+-- 	},
+-- })
+-- ```
+M.setup = function(config)
+	for rule in ipairs(config.format_rules) do
+		vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+			pattern = rule.pattern,
+			callback = M.create_format_fn(rule.command),
+		})
+	end
+end
+
 return M
