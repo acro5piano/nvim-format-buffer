@@ -25,24 +25,32 @@ use("acro5piano/nvim-format-buffer")
 # Usage
 
 ```lua
+require("nvim-format-buffer").setup({
+	format_rules = {
+		{ pattern = { "*.lua" }, command = "stylua -" },
+		{ pattern = { "*.py" }, command = "black -q - | isort -" },
+		{ pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" }, command = "prettier --parser typescript 2>/dev/null" },
+		{ pattern = { "*.md" }, command = "prettier --parser markdown 2>/dev/null" },
+		{ pattern = { "*.md" }, command = "prettier --parser markdown 2>/dev/null" },
+		{ pattern = { "*.css" }, command = "prettier --parser css" },
+		{ pattern = { "*.rs" }, command = "rustfmt --edition 2021" },
+		{ pattern = { "*.sql" }, command = "sql-formatter --config ~/sql-formatter.json" }, -- requires `npm -g i sql-formatter`
+	},
+})
+```
+
+# Advanced Usage
+
+You can use internal `create_format_fn` to control more flow.
+
+```lua
+local run_stylua = require("nvim-format-buffer").create_format_fn("stylua -")
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = { "*.lua" },
-	callback = require("nvim-format-buffer").create_format_fn("stylua -"),
-})
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
-	callback = require("nvim-format-buffer").create_format_fn("prettier --parser typescript 2>/dev/null"),
-})
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*.rs" },
-	callback = require("nvim-format-buffer").create_format_fn("rustfmt --edition 2021"),
-})
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = { "*.py" },
-	callback = require("nvim-format-buffer").create_format_fn("black -q - | isort -"),
+	callback = function()
+    run_stylua()
+    print("Formatted!")
+  end
 })
 ```
 
