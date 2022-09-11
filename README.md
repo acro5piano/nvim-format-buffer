@@ -31,7 +31,6 @@ require("nvim-format-buffer").setup({
     { pattern = { "*.py" }, command = "black -q - | isort -" },
     { pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" }, command = "prettier --parser typescript 2>/dev/null" },
     { pattern = { "*.md" }, command = "prettier --parser markdown 2>/dev/null" },
-    { pattern = { "*.md" }, command = "prettier --parser markdown 2>/dev/null" },
     { pattern = { "*.css" }, command = "prettier --parser css" },
     { pattern = { "*.rs" }, command = "rustfmt --edition 2021" },
     { pattern = { "*.sql" }, command = "sql-formatter --config ~/sql-formatter.json" }, -- requires `npm -g i sql-formatter`
