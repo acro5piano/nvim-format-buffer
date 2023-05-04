@@ -26,6 +26,8 @@ use("acro5piano/nvim-format-buffer")
 
 ```lua
 require("nvim-format-buffer").setup({
+  -- If true, print an error message if command fails. default: false
+  verbose = false,
   format_rules = {
     { pattern = { "*.lua" }, command = "stylua -" },
     { pattern = { "*.py" }, command = "black -q - | isort -" },
@@ -55,5 +57,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 # TODO
 
-- [ ] Error handling
-- [ ] Do not include stderr.
+- [x] Basic Error handling
+- [x] Do not include stderr.
+- [ ] Better Error handling (such as non-interraptive notification)
