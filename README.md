@@ -31,18 +31,18 @@ require("nvim-format-buffer").setup({
   format_rules = {
     { pattern = { "*.rs" }, command = "rustfmt --edition 2021" },
 
-    -- Stdin as `-` is supported in many files
+    -- Stdin as `-` is supported in many formatters
     { pattern = { "*.lua" }, command = "stylua -" },
 
     -- You can pipe multiple commands. No need to escape
     { pattern = { "*.py" }, command = "black -q - | isort -" },
 
     -- Do not include stderr
-    { pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" }, command = "prettier --parser typescript 2>/dev/null" },
+    { pattern = { "*.tsx", "*.ts", }, command = "prettier --parser typescript 2>/dev/null" },
 
     -- command can be a function which returns string
     {
-      pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.css" , "*.md" },
+      pattern = { "*.ts", "*.tsx", "*.css" , "*.md", "*.astro" },
       command = function()
         return "prettier --stdin-filepath " .. vim.api.nvim_buf_get_name(0)
       end,
