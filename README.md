@@ -29,13 +29,24 @@ require("nvim-format-buffer").setup({
   -- If true, print an error message if command fails. default: false
   verbose = false,
   format_rules = {
-    { pattern = { "*.lua" }, command = "stylua -" },
-    { pattern = { "*.py" }, command = "black -q - | isort -" },
-    { pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" }, command = "prettier --parser typescript 2>/dev/null" },
-    { pattern = { "*.md" }, command = "prettier --parser markdown 2>/dev/null" },
-    { pattern = { "*.css" }, command = "prettier --parser css" },
     { pattern = { "*.rs" }, command = "rustfmt --edition 2021" },
-    { pattern = { "*.sql" }, command = "sql-formatter --config ~/sql-formatter.json" }, -- requires `npm -g i sql-formatter`
+
+    -- Stdin as `-` is supported in many files
+    { pattern = { "*.lua" }, command = "stylua -" },
+
+    -- You can pipe multiple commands. No need to escape
+    { pattern = { "*.py" }, command = "black -q - | isort -" },
+
+    -- Do not include stderr
+    { pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" }, command = "prettier --parser typescript 2>/dev/null" },
+
+    -- command can be a function which returns string
+    {
+      pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.css" , "*.md" },
+      command = function()
+        return "prettier --stdin-filepath " .. vim.api.nvim_buf_get_name(0)
+      end,
+    },
   },
 })
 ```
@@ -45,11 +56,10 @@ require("nvim-format-buffer").setup({
 You can use internal `create_format_fn` to control more flow.
 
 ```lua
-local run_stylua = require("nvim-format-buffer").create_format_fn("stylua -")
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*.lua" },
   callback = function()
-    run_stylua()
+    require("nvim-format-buffer").format_whole_file("stylua -")
     print("Formatted!")
   end,
 })
@@ -59,4 +69,5 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 - [x] Basic Error handling
 - [x] Do not include stderr.
+- [x] Enable to run dynamic formatter command.
 - [ ] Better Error handling (such as non-interraptive notification)

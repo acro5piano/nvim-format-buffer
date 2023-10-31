@@ -53,10 +53,20 @@ M.options = {
 M.setup = function(options)
   M.options = vim.tbl_deep_extend("force", {}, M.options, options or {})
   for _, rule in ipairs(options.format_rules) do
-    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-      pattern = rule.pattern,
-      callback = M.create_format_fn(rule.command),
-    })
+    if type(rule.command) == "string" then
+      vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        pattern = rule.pattern,
+        callback = M.create_format_fn(rule.command),
+      })
+    end
+    if type(rule.command) == "function" then
+      vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        pattern = rule.pattern,
+        callback = function()
+          M.format_whole_file(rule.command())
+        end,
+      })
+    end
   end
 end
 
