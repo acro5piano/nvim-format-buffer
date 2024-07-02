@@ -44,7 +44,8 @@ require("nvim-format-buffer").setup({
     {
       pattern = { "*.ts", "*.tsx", "*.css" , "*.md", "*.astro" },
       command = function()
-        return "prettier --stdin-filepath " .. vim.api.nvim_buf_get_name(0)
+        -- Wrap filepath with ' becuase of special filename of Next.js
+        return "prettier --stdin-filepath " .. "'" .. vim.api.nvim_buf_get_name(0) .. "'"
       end,
     },
   },
